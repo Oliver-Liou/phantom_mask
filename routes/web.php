@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Pharmacy;
+use App\Models\PharmacyOpeningHour;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-
-
-    // 測試
-    // TODO:增加pharmacy_opening_hours 資料表 pharmacy_id, day_of_week, start_time, end_time 紀錄
-    $openingHours = "Mon - Fri 08:00 - 17:00 / Sat, Sun 08:00 - 12:00";
-    $parsedHours = Pharmacy::parseOpeningHours($openingHours);
-
-    dd($parsedHours);
-
-    // return view('welcome');
+    return view('welcome');
 });
+
+Route::resource('/pharmacy', 'PharmacyController');

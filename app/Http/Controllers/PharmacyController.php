@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PharmacyCollection;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,12 +15,11 @@ class PharmacyController extends Controller
     public function index(Request $request)
     {
 
-        $pharmacies = DB::table('pharmacies')
-            ->join('pharmacy_opening_hours', 'pharmacies.id', '=', 'pharmacy_opening_hours.pharmacy_id')
-            ->where('pharmacy_opening_hours.day_of_week', $day)
-            ->whereTime('pharmacy_opening_hours.open_time', '<=', $time)
-            ->whereTime('pharmacy_opening_hours.close_time', '>=', $time)
+        $pharmacies = Pharmacy::with('openingHours')
+            ->SearchOpening($request->get('time'), $request->get('day_of_week'))
             ->get();
+
+        return response()->json(['result' => 'success', 'pharmacies' => new PharmacyCollection($pharmacies)]);
     }
 
     /**

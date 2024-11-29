@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,7 +34,7 @@ class PharmacyOpeningHour extends Model
     public static function parseOpeningHours($openingHours)
     {
         // 定義星期對應陣列
-        $daysMap = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        $daysMap = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 
         // 分割時段
         $timeRanges = explode('/', $openingHours);
@@ -79,5 +80,61 @@ class PharmacyOpeningHour extends Model
             }
         }
         return $result;
+    }
+
+    /**
+     * 開放時間格式化成字串
+     * @param array $openingHours
+     * @return string
+     */
+    public static function formatOpeningHours($openingHours)
+    {
+        $daysMap = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+        $result = [];
+
+        foreach ($openingHours as $entry) {
+            $dayOfWeek = $entry['day_of_week'];
+            $openTime = (new DateTime($entry['open_time']))->format('H:i');
+            $closeTime = (new DateTime($entry['close_time']))->format('H:i');
+
+            // 按天數排序，避免錯誤順序
+            usort($dayOfWeek, function ($a, $b) use ($daysMap) {
+                return array_search($a, $daysMap) - array_search($b, $daysMap);
+            });
+
+            // 壓縮連續天數為範圍
+            $compressedDays = [];
+            $startDay = null;
+            $previousIndex = -1;
+
+            foreach ($dayOfWeek as $day) {
+                $currentIndex = array_search($day, $daysMap);
+
+                if ($startDay === null) {
+                    $startDay = $day;
+                } elseif ($currentIndex !== $previousIndex + 1) {
+                    // 非連續，結束當前範圍
+                    $compressedDays[] = ($startDay === $daysMap[$previousIndex])
+                        ? $startDay
+                        : "$startDay - {$daysMap[$previousIndex]}";
+                    $startDay = $day;
+                }
+
+                $previousIndex = $currentIndex;
+            }
+
+            // 添加最後一段
+            if ($startDay !== null) {
+                $compressedDays[] = ($startDay === $daysMap[$previousIndex])
+                    ? $startDay
+                    : "$startDay - {$daysMap[$previousIndex]}";
+            }
+
+            // 組合文字
+            $result[] = implode(', ', $compressedDays) . " $openTime - $closeTime";
+        }
+
+        // 用 `/` 連接多段時間
+        return implode(' / ', $result);
     }
 }
