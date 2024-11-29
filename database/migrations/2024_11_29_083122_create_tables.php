@@ -15,10 +15,18 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('cash_balance')->default(0.0);
-            $table->text('opening_hours');
             $table->timestamps();
         });
+        Schema::create('pharmacy_opening_hours', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('pharmacy_id');
+            $table->json('day_of_week');
+            $table->time('open_time');
+            $table->time('close_time');
+            $table->timestamps();
 
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade')->onUpdate('cascade');
+        });
         Schema::create('masks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pharmacy_id');
