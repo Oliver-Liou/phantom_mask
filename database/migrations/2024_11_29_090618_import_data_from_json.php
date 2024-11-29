@@ -2,6 +2,7 @@
 
 use App\Models\Mask;
 use App\Models\Pharmacy;
+use App\Models\PharmacyOpeningHour;
 use App\Models\PurchaseHistory;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -38,8 +39,15 @@ return new class extends Migration
             $pharmacyData = Pharmacy::create([
                 'name' => $pharmacy['name'],
                 'cash_balance' => $pharmacy['cashBalance'],
-                'opening_hours' => $pharmacy['openingHours'],
             ]);
+            foreach (PharmacyOpeningHour::parseOpeningHours($pharmacy['openingHours']) as $key => $openingHour) {
+                PharmacyOpeningHour::create([
+                    'pharmacy_id' => $pharmacyData->id,
+                    'day_of_week' => $openingHour['day_of_week'],
+                    'open_time' => $openingHour['open_time'],
+                    'close_time' => $openingHour['close_time'],
+                ]);
+            }
             foreach ($pharmacy['masks'] as $key => $mask) {
                 Mask::create([
                     'pharmacy_id' => $pharmacyData->id,
