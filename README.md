@@ -350,6 +350,35 @@ example: `/user?transaction_rank=2&transaction_start=2021-01-17%2005:41:10&trans
 }
 ```
 ---
+### The total amount of masks and dollar value of transactions within a date range.
+- Method：GET
+- Url：/sold_report
+
+#### request
+
+- date_start `dateTime`  YYYY-mm-dd HH:ii:ss
+- date_end `dateTime`  YYYY-mm-dd HH:ii:ss
+
+example: `/sold_report?date_start=2021-01-17%2005:41:10&date_end=2021-01-18%2005:41:10`
+
+#### response
+- result:`String`
+- reports:`array`
+    - count `int` pack count
+    - dollar `double` total dollar
+    - totalMasks `int` total amount
+``` json
+{
+  "result": "success",
+  "reports": {
+    "count": 4,
+    "dollar": 116.93,
+    "totalMasks": 33
+  }
+}
+```
+---
+
 ## A. Raw Data
 ### A.1. Pharmacy Data
 Link: [data/pharmacies.json](data/pharmacies.json)
