@@ -470,14 +470,16 @@ example: `{
 Please run these two script commands to migrate the data into the database.
 
 1. Install [composer](https://getcomposer.org/download/).
-2. Create database in MySql.
+2. Install [PHP 8.1](https://windows.php.net/download#php-8.1).
+3. Install MySql.
+4. Create database in MySql.
     ```sql
     CREATE DATABASE `phantom_mask` /*!40100 COLLATE 'utf8_general_ci' */
     ```
-3. Move to root in project.
-4. Input cmd `composer install` to init laravel.
-5. Input cmd `php artisan env:decrypt --key=base64:DxuU03wYU/Efv2fm4+4OFmTEaps/xj39V9fGcznDcbM=` to decrypt `env.encrypted` or duplicate `.env.example` to `.env` in project.
-6. Set database Setting in `.env`.
+5. Move to root in project.
+6. Input cmd `composer install` to init laravel.
+7. Input cmd `php artisan env:decrypt --key=base64:DxuU03wYU/Efv2fm4+4OFmTEaps/xj39V9fGcznDcbM=` to decrypt `env.encrypted` or duplicate `.env.example` to `.env` in project.
+8. Set database Setting in `.env`.
     ```
     DB_HOST=<your database ip>
     DB_PORT=<your database port>
@@ -485,9 +487,9 @@ Please run these two script commands to migrate the data into the database.
     DB_USERNAME=<your database username>
     DB_PASSWORD=<your database password>
     ```
-7. Input cmd `php artisan migrate` to create database and input json data.
-8. Input cmd `php artisan key:generate` to update `.env` APP_KEY.
-9. If not have server, input cmd `php artisan serve` to simulate sever.
+9. Input cmd `php artisan migrate` to create database and input json data.
+10. Input cmd `php artisan key:generate` to update `.env` APP_KEY.
+11. If not have server, input cmd `php artisan serve` to simulate sever.
     ```log
      INFO  Server running on [http://127.0.0.1:8000].
     ```
