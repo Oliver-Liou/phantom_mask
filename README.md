@@ -378,6 +378,49 @@ example: `/sold_report?date_start=2021-01-17%2005:41:10&date_end=2021-01-18%2005
 }
 ```
 ---
+### Search for pharmacies or masks by name, ranked by relevance to the search term.
+- Method：GET
+- Url：/search
+
+#### request
+
+- term `string`
+
+example: `/search?term=ca`
+
+#### response
+- result:`String`
+- data:`array`
+    - id `int`
+    - name `string` 
+    - type `string` (pharmacy,mask)
+    - relevance `double` relevance rate
+``` json
+{
+  "result": "success",
+  "data": [
+    {
+      "id": 2,
+      "name": "Carepoint",
+      "type": "pharmacy",
+      "relevance": 36.3636363636364
+    },
+    {
+      "id": 3,
+      "name": "First Care Rx",
+      "type": "pharmacy",
+      "relevance": 26.6666666666667
+    },
+    {
+      "id": 13,
+      "name": "Foundation Care",
+      "type": "pharmacy",
+      "relevance": 23.5294117647059
+    }
+  ]
+}
+```
+---
 
 ## A. Raw Data
 ### A.1. Pharmacy Data

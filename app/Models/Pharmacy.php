@@ -75,4 +75,20 @@ class Pharmacy extends Model
             $query->having('masks_count', '<', $count);
         });
     }
+
+    /**
+     * Scope a query to include pharmacy by name.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $name
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchName($query, $name)
+    {
+        if (is_null($name)){
+            return $query;
+        } else {
+            return $query->where('name', 'like', "%$name%");
+        }
+    }
 }
