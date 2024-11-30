@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MaskCollection;
 use App\Models\Mask;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,14 @@ class MaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $masks = Mask::SearchPharmacy($request->get('pharmacy_id'))
+            ->SortName($request->get('name_sort'))
+            ->SortPrice($request->get('price_sort'))
+            ->get();
+
+        return response()->json(['result' => 'success', 'masks' => new MaskCollection($masks)]);
     }
 
     /**

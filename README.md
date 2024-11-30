@@ -23,6 +23,16 @@ You are building a backend service and a database for a pharmacy platform with t
 example: `/pharmacy?day_of_week=Sun&time=09:00`
 
 #### response
+- result:`String`
+- pharmacies:`array`
+    - id
+    - name
+    - cashBalance
+    - openingHours
+    - masks `array`
+        - id
+        - name
+        - price
 ``` json
 {
   "result": "success",
@@ -65,13 +75,62 @@ example: `/pharmacy?day_of_week=Sun&time=09:00`
         }
       ]
     },
-    .....
+    //....
   ]
 }
 ```
 ---
+### List all masks sold by a given pharmacy, sorted by mask name or price.
+- Method：GET
+- Url：/mask
 
-  
+#### request
+
+- pharmacy_id: `int` pharmacy's id.
+- name_sort: `String` name sort. (DESC,ASC)
+- price_sort: `String` price sort. (DESC,ASC)
+
+
+example: `/mask?pharmacy_id=1&price_sort=ASC`
+
+#### response
+- result:`String`
+- masks:`array`
+    - id
+    - name
+    - price
+```json
+{
+  "result": "success",
+  "masks": [
+    {
+      "id": 4,
+      "name": "Second Smile (black) (3 per pack)",
+      "price": 5.84
+    },
+    {
+      "id": 5,
+      "name": "Masquerade (green) (3 per pack)",
+      "price": 9.4
+    },
+    {
+      "id": 1,
+      "name": "True Barrier (green) (3 per pack)",
+      "price": 13.7
+    },
+    {
+      "id": 3,
+      "name": "Second Smile (black) (10 per pack)",
+      "price": 31.98
+    },
+    {
+      "id": 2,
+      "name": "MaskT (green) (10 per pack)",
+      "price": 41.86
+    }
+  ]
+}
+```
 
 ## A. Raw Data
 ### A.1. Pharmacy Data
