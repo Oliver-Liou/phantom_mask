@@ -474,8 +474,10 @@ Please run these two script commands to migrate the data into the database.
     ```sql
     CREATE DATABASE `phantom_mask` /*!40100 COLLATE 'utf8_general_ci' */
     ```
-3. Duplicate `.env.example` to `.env` in project.
-4. Set database Setting in `.env`.
+3. Move to root in project.
+4. Input cmd `composer install` to init laravel.
+5. Input cmd `php artisan env:decrypt --key=base64:DxuU03wYU/Efv2fm4+4OFmTEaps/xj39V9fGcznDcbM=` to decrypt `env.encrypted` or duplicate `.env.example` to `.env` in project.
+6. Set database Setting in `.env`.
     ```
     DB_HOST=<your database ip>
     DB_PORT=<your database port>
@@ -483,8 +485,6 @@ Please run these two script commands to migrate the data into the database.
     DB_USERNAME=<your database username>
     DB_PASSWORD=<your database password>
     ```
-5. Move to root in project.
-6. Input cmd `composer install` to init laravel.
 7. Input cmd `php artisan migrate` to create database and input json data.
 8. Input cmd `php artisan key:generate` to update `.env` APP_KEY.
 9. If not have server, input cmd `php artisan serve` to simulate sever.
