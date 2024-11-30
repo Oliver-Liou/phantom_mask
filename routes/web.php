@@ -18,10 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::resource('/pharmacy', 'PharmacyController');
-Route::resource('/mask', 'MaskController');
-Route::resource('/user', 'UserController');
-Route::resource('/purchase_history', 'PurchaseHistoryController');
-Route::get('/sold_report', 'PurchaseHistoryController@soldReport')->name('mask.sold_report');
-Route::resource('/search', 'SearchController');

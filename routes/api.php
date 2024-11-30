@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('/pharmacy', 'PharmacyController');
+Route::resource('/mask', 'MaskController');
+Route::resource('/user', 'UserController', ['only' => ['index']]);
+Route::post('/user/purchase', 'UserController@purchase')->name('user.purchase');
+Route::resource('/purchase_history', 'PurchaseHistoryController');
+Route::get('/sold_report', 'PurchaseHistoryController@soldReport')->name('mask.sold_report');
+Route::resource('/search', 'SearchController');
+

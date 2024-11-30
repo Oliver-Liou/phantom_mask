@@ -13,7 +13,7 @@ You are building a backend service and a database for a pharmacy platform with t
 ## API
 ### List all pharmacies open at a specific time and on a day of the week if requested.
 - Method：GET
-- Url：/pharmacy
+- Url：/api/pharmacy
 
 #### request
 
@@ -82,7 +82,7 @@ example: `/pharmacy?day_of_week=Sun&time=09:00`
 ---
 ### List all masks sold by a given pharmacy, sorted by mask name or price.
 - Method：GET
-- Url：/mask
+- Url：/api/mask
 
 #### request
 
@@ -134,7 +134,7 @@ example: `/mask?pharmacy_id=1&price_sort=ASC`
 ---
 ### List all pharmacies with more or less than x mask products within a price range.
 - Method：GET
-- Url：/pharmacy
+- Url：/api/pharmacy
 
 #### request
 
@@ -200,7 +200,7 @@ example: `/pharmacy?mask_count=2&mask_condition=less&mask_price_min=10&mask_pric
 ---
 ### The top x users by total transaction amount of masks within a date range.
 - Method：GET
-- Url：/user
+- Url：/api/user
 
 #### request
 
@@ -352,7 +352,7 @@ example: `/user?transaction_rank=2&transaction_start=2021-01-17%2005:41:10&trans
 ---
 ### The total amount of masks and dollar value of transactions within a date range.
 - Method：GET
-- Url：/sold_report
+- Url：/api/sold_report
 
 #### request
 
@@ -380,7 +380,7 @@ example: `/sold_report?date_start=2021-01-17%2005:41:10&date_end=2021-01-18%2005
 ---
 ### Search for pharmacies or masks by name, ranked by relevance to the search term.
 - Method：GET
-- Url：/search
+- Url：/api/search
 
 #### request
 
@@ -418,6 +418,40 @@ example: `/search?term=ca`
       "relevance": 23.5294117647059
     }
   ]
+}
+```
+---
+### Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
+- Method：POST
+- Url：/api/user/purchase
+- content-type: application/json
+
+#### request
+
+- user_id `int`
+- pharmacy_id `int`
+- mask_id `int`
+
+example: `{
+    "user_id": 1,
+    "pharmacy_id": 1,
+    "mask_id": 1
+}`
+
+#### response
+- result:`String`
+- message:`String`
+``` json
+{
+    "result": "success",
+    "message": "purchase completed！"
+}
+```
+#### error response
+``` json
+{
+    "result": "failed",
+    "message": "User cash balance not enough！"
 }
 ```
 ---
