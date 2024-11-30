@@ -20,18 +20,18 @@ class SearchController extends Controller
                 'name' => $data->name,
                 'type' => 'pharmacy',
             ];
-        });
+        })->toArray();
         $masks = Mask::SearchName($term)->get()->map(function ($data) {
             return[
                 'id' => $data->id,
                 'name' => $data->name,
                 'type' => 'mask',
             ];
-        });
+        })->toArray();
 
-        $results = $pharmacies->merge($masks);
+        $results = array_merge($pharmacies, $masks);
         // 計算相似度並排序
-        $sortedResults = $results->map(function ($item) use ($term) {
+        $sortedResults = collect($results)->map(function ($item) use ($term) {
             similar_text(strtolower($term), strtolower($item['name']), $percent);
             $item['relevance'] = $percent; // 記錄相似度百分比
             return $item;
