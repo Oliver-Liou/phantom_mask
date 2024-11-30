@@ -198,6 +198,158 @@ example: `/pharmacy?mask_count=2&mask_condition=less&mask_price_min=10&mask_pric
 }
 ```
 ---
+### The top x users by total transaction amount of masks within a date range.
+- Method：GET
+- Url：/user
+
+#### request
+
+- transaction_rank: `int` The top x
+- transaction_start `dateTime`  YYYY-mm-dd HH:ii:ss
+- transaction_end `dateTime`  YYYY-mm-dd HH:ii:ss
+
+example: `/user?transaction_rank=2&transaction_start=2021-01-17%2005:41:10&transaction_end=2021-01-18%2005:41:10`
+
+#### response
+- result:`String`
+- users:`array`
+    - id
+    - name
+    - cashBalance
+    - openingHours
+    - purchaseHistories `array`
+        - id
+        - pharmacyName
+        - maskName
+        - transactionAmount
+        - transactionDate
+``` json
+{
+  "result": "success",
+  "users": [
+    {
+      "id": 17,
+      "name": "Wilbert Love",
+      "cashBalance": 796.2,
+      "purchaseHistories": [
+        {
+          "id": 87,
+          "pharmacyName": "Foundation Care",
+          "maskName": "Masquerade (green) (10 per pack)",
+          "transactionAmount": 29.87,
+          "transactionDate": "2021-01-02 02:38:09"
+        },
+        {
+          "id": 88,
+          "pharmacyName": "First Care Rx",
+          "maskName": "Second Smile (black) (3 per pack)",
+          "transactionAmount": 14.24,
+          "transactionDate": "2021-01-03 07:30:30"
+        },
+        {
+          "id": 89,
+          "pharmacyName": "Carepoint",
+          "maskName": "Masquerade (blue) (6 per pack)",
+          "transactionAmount": 6.44,
+          "transactionDate": "2021-01-07 05:07:21"
+        },
+        {
+          "id": 90,
+          "pharmacyName": "RX Universal",
+          "maskName": "True Barrier (blue) (3 per pack)",
+          "transactionAmount": 7.16,
+          "transactionDate": "2021-01-07 15:18:41"
+        },
+        {
+          "id": 91,
+          "pharmacyName": "Keystone Pharmacy",
+          "maskName": "True Barrier (green) (3 per pack)",
+          "transactionAmount": 11.3,
+          "transactionDate": "2021-01-13 00:19:32"
+        },
+        {
+          "id": 92,
+          "pharmacyName": "First Pharmacy",
+          "maskName": "Cotton Kiss (green) (10 per pack)",
+          "transactionAmount": 17.5,
+          "transactionDate": "2021-01-13 01:18:23"
+        },
+        {
+          "id": 93,
+          "pharmacyName": "Medlife",
+          "maskName": "True Barrier (green) (10 per pack)",
+          "transactionAmount": 36.25,
+          "transactionDate": "2021-01-17 19:50:27"
+        },
+        {
+          "id": 94,
+          "pharmacyName": "Prescription Hope",
+          "maskName": "Cotton Kiss (black) (3 per pack)",
+          "transactionAmount": 5.61,
+          "transactionDate": "2021-01-18 02:47:27"
+        },
+        {
+          "id": 95,
+          "pharmacyName": "RX Universal",
+          "maskName": "True Barrier (blue) (3 per pack)",
+          "transactionAmount": 6.79,
+          "transactionDate": "2021-01-28 23:17:21"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Yvonne Guerrero",
+      "cashBalance": 191.83,
+      "purchaseHistories": [
+        {
+          "id": 1,
+          "pharmacyName": "Keystone Pharmacy",
+          "maskName": "True Barrier (green) (3 per pack)",
+          "transactionAmount": 12.35,
+          "transactionDate": "2021-01-04 15:18:51"
+        },
+        {
+          "id": 2,
+          "pharmacyName": "Medlife",
+          "maskName": "True Barrier (green) (10 per pack)",
+          "transactionAmount": 38.43,
+          "transactionDate": "2021-01-17 05:41:10"
+        },
+        {
+          "id": 3,
+          "pharmacyName": "RX Universal",
+          "maskName": "True Barrier (blue) (3 per pack)",
+          "transactionAmount": 6.99,
+          "transactionDate": "2021-01-20 12:23:09"
+        },
+        {
+          "id": 4,
+          "pharmacyName": "Keystone Pharmacy",
+          "maskName": "Second Smile (blue) (6 per pack)",
+          "transactionAmount": 14.52,
+          "transactionDate": "2021-01-20 13:20:43"
+        },
+        {
+          "id": 5,
+          "pharmacyName": "Welltrack",
+          "maskName": "True Barrier (green) (10 per pack)",
+          "transactionAmount": 20.91,
+          "transactionDate": "2021-01-26 20:37:13"
+        },
+        {
+          "id": 6,
+          "pharmacyName": "Prescription Hope",
+          "maskName": "Cotton Kiss (green) (10 per pack)",
+          "transactionAmount": 42.63,
+          "transactionDate": "2021-01-30 18:58:57"
+        }
+      ]
+    }
+  ]
+}
+```
+---
 ## A. Raw Data
 ### A.1. Pharmacy Data
 Link: [data/pharmacies.json](data/pharmacies.json)

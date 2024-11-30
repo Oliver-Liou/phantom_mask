@@ -21,3 +21,4 @@ Route::get('/', function () {
 
 Route::resource('/pharmacy', 'PharmacyController');
 Route::resource('/mask', 'MaskController');
+Route::resource('/user', 'UserController');

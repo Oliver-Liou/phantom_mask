@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::all();
-        return response()->json(['result' => 'success', 'users' => $user]);
+        $users = User::SearchTransactionRank($request->get('transaction_rank'), [$request->get('transaction_start'), $request->get('transaction_end')])
+            ->get();
+
+        return response()->json(['result' => 'success', 'users' => new UserCollection($users)]);
     }
 
     /**
