@@ -10,6 +10,31 @@
 # Phantom Mask
 You are building a backend service and a database for a pharmacy platform with the following two raw datasets:
 
+## Setting
+1. Install [composer](https://getcomposer.org/download/).
+2. Create database in MySql.
+    ```sql
+    CREATE DATABASE `phantom_mask` /*!40100 COLLATE 'utf8_general_ci' */
+    ```
+3. Duplicate `.env.example` to `.env` in project.
+4. Set database Setting in `.env`.
+    ```
+    DB_HOST=<your database ip>
+    DB_PORT=<your database port>
+    DB_DATABASE=<your database name>
+    DB_USERNAME=<your database username>
+    DB_PASSWORD=<your database password>
+    ```
+5. Move to root in project.
+6. Input cmd `composer install` to init laravel.
+7. Input cmd `php artisan migrate` to create database and input json data.
+8. Input cmd `php artisan key:generate` to update `.env` APP_KEY.
+9. If not have server, input cmd `php artisan serve` to simulate sever.
+    ```log
+     INFO  Server running on [http://127.0.0.1:8000].
+    ```
+
+
 ## API
 ### List all pharmacies open at a specific time and on a day of the week if requested.
 - Method：GET
