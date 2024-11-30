@@ -131,7 +131,73 @@ example: `/mask?pharmacy_id=1&price_sort=ASC`
   ]
 }
 ```
+---
+### List all pharmacies with more or less than x mask products within a price range.
+- Method：GET
+- Url：/pharmacy
 
+#### request
+
+- mask_count: `int` 
+- mask_condition `String` (more,less)
+- mask_price_min `int` 
+- mask_price_max `int` 
+
+example: `/pharmacy?mask_count=2&mask_condition=less&mask_price_min=10&mask_price_max=30`
+
+#### response
+- result:`String`
+- pharmacies:`array`
+    - id
+    - name
+    - cashBalance
+    - openingHours
+    - masks `array`
+        - id
+        - name
+        - price
+``` json
+{
+  "result": "success",
+  "pharmacies": [
+     {
+      "id": 1,
+      "name": "DFW Wellness",
+      "cashBalance": 328.41,
+      "openingHours": "Mon, Wed, Fri 08:00 - 12:00 / Tue, Thur 14:00 - 18:00",
+      "masks": [
+        {
+          "id": 1,
+          "name": "True Barrier (green) (3 per pack)",
+          "price": 13.7
+        },
+        {
+          "id": 2,
+          "name": "MaskT (green) (10 per pack)",
+          "price": 41.86
+        },
+        {
+          "id": 3,
+          "name": "Second Smile (black) (10 per pack)",
+          "price": 31.98
+        },
+        {
+          "id": 4,
+          "name": "Second Smile (black) (3 per pack)",
+          "price": 5.84
+        },
+        {
+          "id": 5,
+          "name": "Masquerade (green) (3 per pack)",
+          "price": 9.4
+        }
+      ]
+    },
+    //....
+  ]
+}
+```
+---
 ## A. Raw Data
 ### A.1. Pharmacy Data
 Link: [data/pharmacies.json](data/pharmacies.json)

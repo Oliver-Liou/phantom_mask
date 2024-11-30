@@ -51,4 +51,28 @@ class Pharmacy extends Model
             return $query;
         });
     }
+
+    /**
+     * Scope a query to include pharmacy by priceRange and count more or less.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $count
+     * @param string $condition
+     * @param array $priceRange
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchMaskPriceRangeAndCount($query, $count, $condition, $priceRange)
+    {
+        if(empty($count) || empty($condition) || empty($priceRange[0]) || empty($priceRange[1])) return $query;
+
+        return $query->whereHas('masks', function ($query) use ($priceRange) {
+            $query->whereBetween('price', $priceRange);
+        })->withCount(['masks' => function ($query) use ($priceRange) {
+            $query->whereBetween('price', $priceRange);
+        }])->when($condition === 'more', function ($query) use ($count) {
+            $query->having('masks_count', '>', $count);
+        })->when($condition === 'less', function ($query) use ($count) {
+            $query->having('masks_count', '<', $count);
+        });
+    }
 }

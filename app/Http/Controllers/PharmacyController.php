@@ -17,6 +17,8 @@ class PharmacyController extends Controller
 
         $pharmacies = Pharmacy::with('openingHours')
             ->SearchOpening($request->get('time'), $request->get('day_of_week'))
+            ->SearchMaskPriceRangeAndCount($request->get('mask_count'), $request->get('mask_condition'),
+                [$request->get('mask_price_min', 0), $request->get('mask_price_max')])
             ->get();
 
         return response()->json(['result' => 'success', 'pharmacies' => new PharmacyCollection($pharmacies)]);
